@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.test.mapper.DimDateInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cloud.test.entity.DimDateInfo">
+        <id column="id" property="id" />
+        <result column="date" property="date" />
+        <result column="year" property="year" />
+        <result column="quarter" property="quarter" />
+        <result column="quarter_cn" property="quarterCn" />
+        <result column="month" property="month" />
+        <result column="month_cn" property="monthCn" />
+        <result column="month_en" property="monthEn" />
+        <result column="week" property="week" />
+        <result column="week_cn" property="weekCn" />
+        <result column="week_en" property="weekEn" />
+        <result column="week_of_year" property="weekOfYear" />
+        <result column="day_of_month" property="dayOfMonth" />
+        <result column="day_of_year" property="dayOfYear" />
+    </resultMap>
+
+</mapper>

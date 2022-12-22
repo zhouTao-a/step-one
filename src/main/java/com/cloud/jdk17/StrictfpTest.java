@@ -1,0 +1,1 @@
+package com.cloud.jdk17;/** * 306：恢复始终严格的浮点语义 */public class StrictfpTest {    /**     * strictfp     * JDK17再次严格要求所有浮点计算,不需要 strictfp 关键字     */    public static Double test() {        return 1.1d;    }}

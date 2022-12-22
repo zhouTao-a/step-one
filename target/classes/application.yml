@@ -1,0 +1,12 @@
+server:
+  port: 1010
+
+spring:
+  profiles:
+    active: dev
+
+mybatis-plus:
+  mapper-locations: classpath:mappers/*.xml
+  #开启sql日志
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

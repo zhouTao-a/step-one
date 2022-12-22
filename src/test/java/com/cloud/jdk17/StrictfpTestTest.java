@@ -1,0 +1,1 @@
+package com.cloud.jdk17;import org.junit.jupiter.api.Test;import static org.junit.jupiter.api.Assertions.*;class StrictfpTestTest {    @Test    void calculate() {        Double calculate = StrictfpTest.test();        assertNull(calculate);    }}

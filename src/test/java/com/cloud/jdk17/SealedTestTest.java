@@ -1,0 +1,1 @@
+package com.cloud.jdk17;import org.junit.jupiter.api.Test;class SealedTestTest {    @Test    public void test() {        SealedTest sealedTest = new SealedTest();        sealedTest.test();    }}
