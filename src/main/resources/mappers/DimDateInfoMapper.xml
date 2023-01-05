@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cloud.test.mapper.DimDateInfoMapper">
+<mapper namespace="com.cloud.mybatis.mapper.DimDateInfoMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.cloud.test.entity.DimDateInfo">
+    <resultMap id="BaseResultMap" type="com.cloud.mybatis.entity.DimDateInfo">
         <id column="id" property="id" />
         <result column="date" property="date" />
         <result column="year" property="year" />

@@ -1,7 +1,7 @@
-package com.cloud.test.mapper;
+package com.cloud.mybatis.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.cloud.test.entity.DimDateInfo;
+import com.cloud.mybatis.entity.DimDateInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -1,6 +1,6 @@
-package com.cloud.test.service;
+package com.cloud.mybatis.service;
 
-import com.cloud.test.entity.DimDateInfo;
+import com.cloud.mybatis.entity.DimDateInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

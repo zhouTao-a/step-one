@@ -1,9 +1,9 @@
-package com.cloud.test.service.impl;
+package com.cloud.mybatis.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cloud.test.entity.DimDateInfo;
-import com.cloud.test.mapper.DimDateInfoMapper;
-import com.cloud.test.service.IDimDateInfoService;
+import com.cloud.mybatis.entity.DimDateInfo;
+import com.cloud.mybatis.mapper.DimDateInfoMapper;
+import com.cloud.mybatis.service.IDimDateInfoService;
 import org.springframework.stereotype.Service;
 
 /**

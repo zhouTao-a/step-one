@@ -1,8 +1,8 @@
-package com.cloud.test.controller;
+package com.cloud.mybatis.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.cloud.test.entity.DimDateInfo;
-import com.cloud.test.mapper.DimDateInfoMapper;
+import com.cloud.mybatis.entity.DimDateInfo;
+import com.cloud.mybatis.mapper.DimDateInfoMapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
