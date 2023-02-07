@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cloud.mybatis.entity.DimDateInfo;
 import com.cloud.mybatis.mapper.DimDateInfoMapper;
 import com.cloud.mybatis.service.IDimDateInfoService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 /**
  * <p>
@@ -17,4 +19,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class DimDateInfoServiceImpl extends ServiceImpl<DimDateInfoMapper, DimDateInfo> implements IDimDateInfoService {
 
+    @Resource
+    private DimDateInfoMapper mapper;
+
+    @Override
+    public DimDateInfo getByDate(String date) {
+        if (ObjectUtils.isEmpty(date)) {
+            throw new RuntimeException("日期不能为空");
+        }
+        return mapper.getByDate(date);
+    }
 }

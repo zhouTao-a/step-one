@@ -3,6 +3,7 @@ package com.cloud.mybatis.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cloud.mybatis.entity.DimDateInfo;
 import com.cloud.mybatis.mapper.DimDateInfoMapper;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +23,8 @@ import java.util.List;
 @RequestMapping("/date-info")
 public class DimDateInfoController {
 
-    private final DimDateInfoMapper mapper;
-
-    public DimDateInfoController(DimDateInfoMapper mapper) {
-        this.mapper = mapper;
-    }
+    @Resource
+    private DimDateInfoMapper mapper;
 
     @GetMapping("/list/{date}")
     public List<DimDateInfo> list(@PathVariable String date){

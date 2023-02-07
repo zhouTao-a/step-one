@@ -13,4 +13,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IDimDateInfoService extends IService<DimDateInfo> {
 
+    /**
+     * 根据日期查询 返回DimDateInfo对象
+     * @param date 日期字符串
+     * @return DimDateInfo
+     */
+    DimDateInfo getByDate(String date);
 }

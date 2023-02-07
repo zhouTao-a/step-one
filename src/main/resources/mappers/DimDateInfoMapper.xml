@@ -20,4 +20,21 @@
         <result column="day_of_year" property="dayOfYear" />
     </resultMap>
 
+    <sql id="BaseColumn">
+        id,date,year,quarter,quarter_cn,month,month_cn,month_en,week,week_cn,week_en,
+            week_of_year,day_of_month,day_of_year
+    </sql>
+
+    <sql id="BaseTable">
+        dim_date_info
+    </sql>
+
+    <select id="getByDate" resultMap="BaseResultMap">
+        select <include refid="BaseColumn"/>
+            from <include refid="BaseTable"/>
+            <where>
+                date = #{date}
+            </where>
+    </select>
+
 </mapper>
