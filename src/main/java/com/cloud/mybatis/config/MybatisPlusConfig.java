@@ -1,4 +1,4 @@
-package com.cloud.jdk17.config;
+package com.cloud.mybatis.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
