@@ -8,14 +8,14 @@
         <result column="dis_name" property="disName" />
         <result column="login_name" property="loginName" />
         <result column="password" property="password" />
-        <result column="delete_state" property="deleteState" />
+        <result column="deleted" property="deleted" />
         <result column="version" property="version" />
         <result column="tenant_id" property="tenantId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, dis_name, login_name, password, delete_state, version, tenant_id
+        id, dis_name, login_name, password, deleted, version, tenant_id
     </sql>
 
 </mapper>

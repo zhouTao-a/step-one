@@ -3,7 +3,6 @@ package com.cloud.mybatis.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.Version;
 
@@ -42,9 +41,8 @@ public class SysUser implements Serializable {
     @TableField("password")
     private String password;
 
-    @TableField("delete_state")
-    @TableLogic
-    private Integer deleteState;
+    @TableField(value = "deleted")
+    private Integer deleted;
 
     @TableField("version")
     @Version
