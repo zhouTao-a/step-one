@@ -4,3 +4,17 @@ spring:
     username: root
     password: qaz123WSX
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      database: 0           # 默认数据库
+      host: 1.12.248.64       # 主机地址
+      password: qaz123WSXQWE    # 密码
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+      port: 6379            # 端口
+      timeout: 3000         # 超时时间
+

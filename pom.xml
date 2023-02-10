@@ -24,6 +24,11 @@
   </properties>
 
   <dependencies>
+    <!-- redis -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
     <!-- http://localhost:1010/swagger-ui/index.html -->
     <dependency>
       <groupId>org.springdoc</groupId>

@@ -2,12 +2,17 @@ package com.cloud.mybatis.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
+import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.LongValue;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 
 @Configuration
 @MapperScan("com.cloud.mybatis.mapper")
@@ -30,26 +35,26 @@ public class MybatisPlusConfig {
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         //多租户
-//        interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new TenantLineHandler() {
-//            @Override
-//            public Expression getTenantId() {
-//                //设置当前租户ID，实际情况你可以从session、或者缓存中拿都行
-//                return new LongValue(1);
-//            }
-//
-//            @Override
-//            public String getTenantIdColumn() {
-//                //数据库字段
-//                return "tenant_id";
-//            }
-//
-//            @Override
-//            public boolean ignoreTable(String tableName) {
-//                //只忽略时间维度表
-//                return StringUtils.pathEquals(tableName, "dim_date_info");
-//            }
-//
-//        }));
+        interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new TenantLineHandler() {
+            @Override
+            public Expression getTenantId() {
+                //设置当前租户ID，实际情况你可以从session、或者缓存中拿都行
+                return new LongValue(1);
+            }
+
+            @Override
+            public String getTenantIdColumn() {
+                //数据库字段
+                return "tenant_id";
+            }
+
+            @Override
+            public boolean ignoreTable(String tableName) {
+                //只忽略时间维度表
+                return StringUtils.pathEquals(tableName, "dim_date_info");
+            }
+
+        }));
 
         //自动分页
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
