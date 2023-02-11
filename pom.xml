@@ -21,9 +21,17 @@
     <druid.version>1.2.15</druid.version>
     <mockito.version>5.1.1</mockito.version>
     <swagger.version>2.0.2</swagger.version>
+    <shiro.version>1.10.0</shiro.version>
   </properties>
 
   <dependencies>
+    <!-- shiro -->
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-core</artifactId>
+      <version>${shiro.version}</version>
+    </dependency>
+
     <!-- redis -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
