@@ -25,7 +25,7 @@ public class MybatisPlusConfig {
      * 动态表名: DynamicTableNameInnerInterceptor
      * 乐观锁: OptimisticLockerInnerInterceptor
      * sql性能规范: IllegalSQLInnerInterceptor
-     * 防止全表更新与删除: BlockAttackInnerInterceptor
+     * 防止全表更新与删除: BlockAttackInnerInterceptor (绕过多租户,将插件放到多租户前。与官方推荐顺序不同)
      * 使用多个功能需要注意顺序关系,建议使用如下顺序
      * 多租户,动态表名
      * 分页,乐观锁
@@ -34,6 +34,9 @@ public class MybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        //防止全表更新与删除
+        interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
+
         //多租户
         interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new TenantLineHandler() {
             @Override
@@ -61,9 +64,6 @@ public class MybatisPlusConfig {
 
         //乐观锁
         interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
-
-        //防止全表更新与删除
-        interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
         return interceptor;
     }
 }
