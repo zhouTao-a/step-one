@@ -4,77 +4,61 @@ spring:
     username: root
     password: qaz123WSX
     driver-class-name: com.mysql.cj.jdbc.Driver
-    druid:
-      enable: true
-      url: jdbc:mysql://1.12.248.64:3306/demo01?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=true
-      username: root
-      password: qaz123WSX
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      #配置初始化大小、最小、最大线程数
-      initialSize: 5
-      #CPU核数+1，也可以大些但不要超过20，数据库加锁时连接过多性能下降
-      max-active: 8
-      #最小连接池数
-      min-idle: 1
-      #最大等待时间，单位毫秒，内网：800，外网：1200（三次握手1s）
-      max-wait: 60000
-      #可以支持PSCache（提升写入、查询效率） 对支持游标的数据库提升巨大，例如Oracle. Mysql建议关闭
-      pool-prepared-statements: false
-      #要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100。缺省值为-1
-      max-pool-prepared-statement-per-connection-size: -1
-      #启用PSCache时，配置必须大于0，大于0时，pool-prepared-statements会修改为true。在Oracle中可以配置大一点，例如100
-      max-open-prepared-statements: -1
-      #检测连接是否有效. 如果为NULL test-on-borrow、test-on-return、test-while-idle都不会生效
-      validation-query: SELECT 1
-      #单位：秒，检测连接是否有效的超时时间。底层调用jdbc Statement对象的void setQueryTimeout(int seconds)方法
-      validation-query-timeout: 60000
-      #设置从连接池获取连接时是否检查连接有效性，true检查，false不检查 这个配置会降低性能
-      test-on-borrow: true
-      #设置从连接池归还连接时是否检查连接有效性，true检查，false不检查 这个配置会降低性能
-      test-on-return: false
-      #建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
-      test-while-idle: true
-      #1) Destroy线程会检测连接的间隔时间 2) testWhileIdle的判断依据，详细看testWhileIdle属性的说明
-      time-between-eviction-runs-millis: 60000
-      #连接空闲时间大于该值并且池中空闲连接数大于min_idle则关闭这个连接。缺省值为30分钟
-      min-evictable-idle-time-millis: 1800000
-      #连接空闲时间大于该值，不管min_idle是多少都关闭这个连接。缺省值为7小时
-      max-evictable-idle-time-millis: 25200000
-      #属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有：
-      #监控统计用的filter:stat
-      #日志用的filter:log4j
-      #防御sql注入的filter:wall
-      filters: stat,wall,log4j
-      web-stat-filter:
-        #是否启用StatFilter 默认值false
-        enabled: true
-        #匹配的url
-        url-pattern: /*
-        #排除一些不必要的url
-        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
-        #你可以关闭session统计功能
-        session-stat-enable: false
-        #默认sessionStatMaxCount是1000个，你也可以按需要进行配置
-        session-stat-max-count: 1000
-        #使得druid能够知道当前的session的用户是谁
-        #principal-session-name: step-one-session
-        #如果你的user信息保存在cookie中，你可以配置principalCookieName，使得druid知道当前的user是谁
-        #principal-cookie-name: step-one-cookie
-        #配置profileEnable能够监控单个url调用的sql列表
-        profile-enable: true
-      #配置_StatViewServlet配置,用于展示Druid的统计信息
-      stat-view-servlet:
-        enabled: true
-        url-pattern: /druid/*
-        #允许清空统计数据
-        reset-enable: true
-        #监控页面登陆的用户名
-        login-username: step-one
-        #登陆监控页面所需的密码
-        login-password: step-one
-        #deny优先于allow，如果在deny列表中，就算在allow列表中，也会被拒绝
-        #如果allow没有配置或者为空，则允许所有访问
-        #允许的IP
-        #allow:
-        #拒绝的IP
-        #deny:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      #官方推荐设置
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      useServerPrepStmts: true
+      useLocalSessionState: true
+      rewriteBatchedStatements: true
+      cacheResultSetMetadata: true
+      cacheServerConfiguration: true
+      elideSetAutoCommits: true
+      maintainTimeStats: false
+      #-------------JMX--------------------------------
+      # 是否开启 JMX 默认 false
+      register-mbeans: true
+      # 是否允许通过 JMX 挂起和恢复连接池 默认为 false
+      allow-pool-suspension: true
+      # 从池中借出的连接是否默认自动提交事务 默认 true
+      auto-commit: true
+      # 当我从池中借出连接时，愿意等待多长时间。如果超时，将抛出 SQLException
+      # 默认 30000 ms，最小值 250 ms。支持 JMX 动态修改
+      connection-timeout: 30000
+      # 一个连接在池里闲置多久时会被抛弃
+      # 当 minimumIdle < maximumPoolSize 才生效
+      # 默认值 600000 ms，最小值为 10000 ms，0表示禁用该功能。支持 JMX 动态修改
+      idle-timeout: 60000
+      # 多久检查一次连接的活性
+      # 检查时会先把连接从池中拿出来（空闲的话），然后调用isValid()或执行connectionTestQuery来校验活性，如果通过校验，则放回池里。
+      # 默认 0 （不启用），最小值为 30000 ms，必须小于 maxLifetime。支持 JMX 动态修改
+      keepalive-time: 0
+      # 当一个连接存活了足够久，HikariCP 将会在它空闲时把它抛弃
+      # 默认 1800000  ms，最小值为 30000 ms，0 表示禁用该功能。支持 JMX 动态修改
+      max-lifetime: 1800000
+      # 用来检查连接活性的 sql，要求是一个查询语句，常用select 'x'
+      # 如果驱动支持 JDBC4.0，建议不设置，这时默认会调用  Connection.isValid() 来检查，该方式会更高效一些
+      # 默认为空
+#      connection-test-query:
+
+      # 池中至少要有多少空闲连接。
+      # 当空闲连接 < minimumIdle，总连接 < maximumPoolSize 时，将新增连接
+      # 默认等于 maximumPoolSize。支持 JMX 动态修改
+      minimum-idle: 5
+      # 池中最多容纳多少连接（包括空闲的和在用的）
+      # 默认为 10。支持 JMX 动态修改
+      maximum-pool-size: 10
+
+      # 用于记录连接池各项指标的 MetricRegistry 实现类
+      # 默认为空，只能通过代码设置
+      # metricRegistry=
+
+      # 用于报告连接池健康状态的 HealthCheckRegistry 实现类
+      # 默认为空，只能通过代码设置
+      # healthCheckRegistry=
+
+      # 连接池名称。
+      # 默认自动生成
+      pool-name: hikari_cp
