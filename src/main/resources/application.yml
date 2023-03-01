@@ -2,6 +2,10 @@ server:
   port: 1010
 
 spring:
+  mvc:
+    view:
+      prefix: /
+      suffix: .jsp
   profiles:
     active: @profiles.active@
   data:
