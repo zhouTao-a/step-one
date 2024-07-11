@@ -7,8 +7,9 @@ spring:
 
   data:
     redis:
-      database: 1           # 默认数据库
+      database: 0           # 默认数据库
       host: 1.12.248.64       # 主机地址
+      username:
       password: qaz123WSXQWE    # 密码
       pool:
         max-active: 8
