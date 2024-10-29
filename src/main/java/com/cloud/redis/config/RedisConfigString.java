@@ -10,7 +10,7 @@ import org.springframework.data.redis.serializer.SerializationException;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 //@Configuration
-public class RedisConfig {
+public class RedisConfigString {
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
@@ -37,7 +37,7 @@ public class RedisConfig {
             }
         };
 
-        return new BloomFilterRedisTemplate(factory, valueSerializer);
+        return new BloomFilterRedisTemplateString(factory, valueSerializer);
     }
 
 }

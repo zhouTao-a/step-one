@@ -6,8 +6,10 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.IntStream;
 
+import static java.lang.System.*;
 import static java.lang.System.out;
 
 @Service("redisService")
@@ -16,9 +18,13 @@ public class RedisServiceImpl implements RedisService {
     @Resource
     private RedisUtils redisUtils;
 
+    private static final String REDIS_TEST_KEY = "TEST:"; // 原文显示
+//    private static final String REDIS_TEST_KEY = "STRING:"; // 字符串显示
+//    private static final String REDIS_TEST_KEY = "BIN:"; // 二进制显示
+
     @Override
     public void listGet() {
-        String key = "str_list";
+        String key = REDIS_TEST_KEY + "str_list";
         // 清理之前的测试数据
         redisUtils.del(key);
 
@@ -43,7 +49,7 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public void hashGet() {
-        String key = "user:1001";
+        String key = REDIS_TEST_KEY + "user1001";
 
         // 设置单个字段
         redisUtils.setHashField(key, "name", "John");
@@ -64,9 +70,6 @@ public class RedisServiceImpl implements RedisService {
         Map<Object, Object> user = redisUtils.getAllHashFields(key);
         out.println("User: " + user);
 
-        // 删除字段
-//        redisUtils.deleteHashFields(key, "age");
-
         // 增加字段值
         redisUtils.incrementHashField(key, "age", 1);
 
@@ -84,7 +87,7 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public void setGet() {
-        String key = "userSet";
+        String key = REDIS_TEST_KEY + "userSet";
 
         // 添加成员到集合
         redisUtils.addMembers(key, "John", "Alice", "Bob");
@@ -106,22 +109,23 @@ public class RedisServiceImpl implements RedisService {
         out.println("Popped member: " + poppedMember);
 
         // 获取集合的交集
-        redisUtils.addMembers("otherSet", "Alice", "Eve");
-        Set<Object> intersect = redisUtils.getIntersect(key, "otherSet");
+        String otherSet = REDIS_TEST_KEY + "otherSet";
+        redisUtils.addMembers(otherSet, "Alice", "Eve");
+        Set<Object> intersect = redisUtils.getIntersect(key, otherSet);
         out.println("Intersect: " + intersect);
 
         // 获取集合的并集
-        Set<Object> union = redisUtils.getUnion(key, "otherSet");
+        Set<Object> union = redisUtils.getUnion(key, otherSet);
         out.println("Union: " + union);
 
         // 获取集合的差集
-        Set<Object> difference = redisUtils.getDifference(key, "otherSet");
+        Set<Object> difference = redisUtils.getDifference(key, otherSet);
         out.println("Difference: " + difference);
     }
 
     @Override
     public void sortSetGet() {
-        String key = "userScores";
+        String key = REDIS_TEST_KEY + "userScores";
 
         // 添加成员到有序集合
         redisUtils. addZMember(key, 100, "John");
@@ -166,7 +170,7 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public void stringGet() {
-        String key = "exampleKey";
+        String key = REDIS_TEST_KEY + "exampleKey";
         String value = "hello";
 
         // 设置值
@@ -176,12 +180,13 @@ public class RedisServiceImpl implements RedisService {
         out.println("Retrieved value: " + retrievedValue);
 
         // 增加值
-        redisUtils.setValue("count", "1");
-        Long incrementedValue = redisUtils.incrementValue("count");
+        String countKey = REDIS_TEST_KEY + "count";
+        redisUtils.setValue(countKey, 1);
+        Long incrementedValue = redisUtils.incrementValue(countKey);
         out.println("Incremented value: " + incrementedValue);
 
         // 减少值
-        Long decrementedValue = redisUtils.decrementValue("count");
+        Long decrementedValue = redisUtils.decrementValue(countKey);
         out.println("Decremented value: " + decrementedValue);
 
         // 追加值
@@ -200,30 +205,46 @@ public class RedisServiceImpl implements RedisService {
 
         // 同时设置多个 key-value 对
         Map<String, Object> keyValueMap = new HashMap<>();
-        keyValueMap.put("key1", "value1");
-        keyValueMap.put("key2", "value2");
+        keyValueMap.put(REDIS_TEST_KEY + "key1", "value1");
+        keyValueMap.put(REDIS_TEST_KEY + "key2", "value2");
         redisUtils.setMultipleValues(keyValueMap);
 
         // 获取多个 key 的值
-        List<String> keys = Arrays.asList("key1", "key2");
+        List<String> keys = Arrays.asList(REDIS_TEST_KEY + "key1", REDIS_TEST_KEY + "key2");
         List<Object> values = redisUtils.getMultipleValues(keys);
         out.println("Multiple values: " + values);
     }
 
     @Override
     public void test() {
-        String key = "exampleKey";
-        String value = "hello";
-
-        // 设置值
-        redisUtils.setValue(key, value);
-        out.println("Appended value: " + redisUtils.getValue(key));
-
-        // 追加值
-        redisUtils.appendValue(key, " world");
-        Object appendedValue = redisUtils.getValue(key);
-        out.println("Appended value: " + appendedValue);
+        out.println("执行成功");
     }
+
+    public static void main(String[] args) {
+        CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
+
+        // 添加元素
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        // 创建一个线程，向列表中添加元素
+        new Thread(() -> {
+            list.add("D");
+            out.println("Added D");
+        }).start();
+
+        // 迭代列表
+        for (String item : list) {
+            out.println("Item: " + item);
+            try {
+                Thread.sleep(100); // 模拟处理时间
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 
 }
