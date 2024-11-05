@@ -1,0 +1,5 @@
+org.springframework.context.ApplicationContextInitializer=\
+com.cloud.springboot.initializer.AllenApplicationContextInitializer
+
+org.springframework.boot.ApplicationListener=\
+com.cloud.springboot.listener.AllenStartingApplicationListener
